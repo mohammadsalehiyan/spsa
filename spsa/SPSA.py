@@ -67,7 +67,7 @@ class SimpleSPSA ( object ):
         """
         n_iter = 0
         num_p = theta_0.shape[0]
-        print "Starting theta=", theta_0
+        print ("Starting theta=", theta_0)
         theta = theta_0
         j_old = self.calc_loss ( theta )
         # Calculate the initial cost function
@@ -121,14 +121,14 @@ class SimpleSPSA ( object ):
             j_new = self.calc_loss ( theta )
             # Be chatty to the user, tell him/her how it's going...
             if n_iter % report == 0:
-                print "\tIter %05d" % n_iter, j_new, ak, ck
+                print ("\tIter %05d" % n_iter, j_new, ak, ck)
             # Functional tolerance: you can specify to ignore new theta values
             # that result in large shifts in the function value. Not a great
             # way to keep the results sane, though, as ak and ck decrease
             # slowly.
             if self.function_tolerance is not None:    
                 if np.abs ( j_new - j_old ) > self.function_tolerance:
-                    print "\t No function tolerance!", np.abs ( j_new - j_old )
+                    print ("\t No function tolerance!", np.abs ( j_new - j_old ))
                     theta = theta_saved
                     continue
                 else:
@@ -138,8 +138,8 @@ class SimpleSPSA ( object ):
             if self.param_tolerance is not None:
                 theta_dif = np.abs ( theta - theta_saved ) 
                 if not np.all ( theta_dif < self.param_tolerance ):
-                    print "\t No param tolerance!", theta_dif < \
-                        self.param_tolerance
+                    print ("\t No param tolerance!", theta_dif < \
+                        self.param_tolerance)
                     theta = theta_saved
                     continue
             # Ignore results that are outside the boundaries
@@ -178,6 +178,6 @@ def test_spsa ( p_in, noise_var ):
         noise_var=noise_var, min_vals=np.ones(3)*(-5), max_vals = np.ones(3)*5 )
     theta0 = np.random.rand(3)
     ( xsol, j_opt, niter ) = opti.minimise (theta0 )
-    print xsol, j_opt, niter
+    print (xsol, j_opt, niter)
 if __name__ == "__main__":
     test_spsa ( [0.1, -2.6, -1.5], 0.3 )
